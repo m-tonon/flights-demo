@@ -13,5 +13,10 @@ import { NavMenuComponent } from '../nav-menu/nav-menu.component';
   styleUrls: ['./search-flights.component.css']
 })
 export class SearchFlightsComponent {
-
+  
+  searchResult: any = [
+    "American Airlines",
+    "British Airways",
+    "Lufthansa"
+  ];
 }

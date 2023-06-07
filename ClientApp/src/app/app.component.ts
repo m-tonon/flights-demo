@@ -13,7 +13,7 @@ import { SearchFlightsComponent } from './search-flights/search-flights.componen
     CommonModule,
     RouterModule,
     NavMenuComponent,
-    SearchFlightsComponent
+    SearchFlightsComponent,
   ],
 })
 export class AppComponent {

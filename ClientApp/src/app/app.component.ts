@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { SearchFlightsComponent } from './search-flights/search-flights.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { SearchFlightsComponent } from './search-flights/search-flights.component';
 
 @Component({
   selector: 'app-root',

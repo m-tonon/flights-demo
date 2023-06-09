@@ -41,7 +41,6 @@
           <div class="input-group-text">For</div>
           <input type="number" class="form-control" placeholder="1" />
           <div class="input-group-text">Passengers</div>
-
           <button type="submit" class="btn-primary btn">
             <i class="fa fa-search" aria-hidden="true"></i>
           </button>
@@ -51,6 +50,71 @@
   </div>
 </form>
 
+<!-- Flights Card -->
 <div *ngFor="let flight of searchResult">
-  {{ flight }}
+  <div class="card text-dark mt-5 text-center">
+    <div class="cart-body p-3 bg-light">
+      <h6 class="card-title">{{ flight.airline }}</h6>
+      <div class="card-title text-danger">
+        {{ flight.reaminingSeats }} remaining seats
+      </div>
+
+      <div class="d-grid text-center g-2">
+        <div class="row">
+          <!-- Departure -->
+          <div class="col">
+            <div class="col m-3">
+              <i class="text-primary fas fa-plane-departure fs-5"></i>
+            </div>
+            <div class="col">
+              <i class="fa-solid fa-location-dot">
+                {{ flight.departure.place }}
+              </i>
+            </div>
+            <div class="col">
+              <i class="fa-regular"></i>
+              {{ flight.departure.time | date }}
+            </div>
+            <div class="col">
+              <i class="fa-regular fa-clock"></i>
+              {{ flight.departure.time | date : "shortTime" }}
+            </div>
+          </div>
+          <!-- Price info -->
+          <div class="col">
+            <div class="d-flex align-items-center" style="width: 500px">
+              <i class="fa-solid fa-circle mt-2" style="font-size: 9px"></i>
+              <hr class="d-block w-100 mt-4" />
+              <i class="fas fa-plane mt-2"></i>
+            </div>
+            <i class="fas fa-usd">{{ flight.price }}</i>
+            <br />
+            <a href="" class="btn btn-secondary mt-2">
+              <i class="fas fa-ticket"></i>
+              Book
+            </a>
+          </div>
+          <!-- Arrival -->
+          <div class="col">
+            <div class="col m-3">
+              <i class="text-primary fas fa-plane-arrival fs-5"></i>
+            </div>
+            <div class="col">
+              <i class="fa-solid fa-location-dot">
+                {{ flight.arrival.place }}
+              </i>
+            </div>
+            <div class="col">
+              <i class="fa-regular"></i>
+              {{ flight.arrival.time | date }}
+            </div>
+            <div class="col">
+              <i class="fa-regular fa-clock"></i>
+              {{ flight.arrival.time | date : "shortTime" }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,19 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
-
-export interface FlightRm {
-  airline: string;
-  arrival: TimePlaceRm;
-  departure: TimePlaceRm;
-  reaminingSeats: number;
-  price: string;
-}
-
-export interface TimePlaceRm {
-  place: string;
-  time: string;
-}
+import { FlightRm } from 'src/api/models';
+import { TimePlaceRm } from 'src/api/models';
+import { FlightService } from 'src/api/services';
 
 @Component({
   selector: 'app-search-flights',
@@ -27,27 +17,12 @@ export interface TimePlaceRm {
 })
 export class SearchFlightsComponent {
   
-  searchResult: FlightRm[] = [
-    {
-      airline: "American Airlines",
-      departure: { place: "Los Angeles", time: Date.now().toString() },
-      arrival: { place: "Istambul", time: Date.now().toString() },
-      reaminingSeats: 500,
-      price: "500"
-    },
-    {
-      airline: "Deutsche BA",
-      departure: { place: "Munchen", time: Date.now().toString() },
-      arrival: { place: "Schiphol", time: Date.now().toString() },
-      reaminingSeats: 60,
-      price: "600"
-    },
-    {
-      airline: "British Airways",
-      departure: { place: "London, England", time: Date.now().toString() },
-      arrival: { place: "Vizzola-Ticino", time: Date.now().toString() },
-      reaminingSeats: 60,
-      price: "600"
-    },
-  ];
+  searchResult: FlightRm[] = [];
+
+  constructor(private flightService: FlightService ) { }
+
+  search() {
+    this.flightService.flightGet({})
+      .subscribe(response => this.searchResult = response);
+  }
 }

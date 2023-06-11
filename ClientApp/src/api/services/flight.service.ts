@@ -15,10 +15,7 @@ import { FlightRm } from '../models/flight-rm';
   providedIn: 'root',
 })
 export class FlightService extends BaseService {
-  constructor(
-    config: ApiConfiguration,
-    http: HttpClient
-  ) {
+  constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
   }
 
@@ -33,26 +30,32 @@ export class FlightService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  flightGet$Plain$Response(params?: {
-  },
-  context?: HttpContext
-
-): Observable<StrictHttpResponse<Array<FlightRm>>> {
-
-    const rb = new RequestBuilder(this.rootUrl, FlightService.FlightGetPath, 'get');
+  flightGet$Plain$Response(
+    params?: {},
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<Array<FlightRm>>> {
+    const rb = new RequestBuilder(
+      this.rootUrl,
+      FlightService.FlightGetPath,
+      'get'
+    );
     if (params) {
     }
 
-    return this.http.request(rb.build({
-      responseType: 'text',
-      accept: 'text/plain',
-      context: context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<FlightRm>>;
-      })
-    );
+    return this.http
+      .request(
+        rb.build({
+          responseType: 'text',
+          accept: 'text/plain',
+          context: context,
+        })
+      )
+      .pipe(
+        filter((r: any) => r instanceof HttpResponse),
+        map((r: HttpResponse<any>) => {
+          return r as StrictHttpResponse<Array<FlightRm>>;
+        })
+      );
   }
 
   /**
@@ -61,13 +64,11 @@ export class FlightService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  flightGet$Plain(params?: {
-  },
-  context?: HttpContext
-
-): Observable<Array<FlightRm>> {
-
-    return this.flightGet$Plain$Response(params,context).pipe(
+  flightGet$Plain(
+    params?: {},
+    context?: HttpContext
+  ): Observable<Array<FlightRm>> {
+    return this.flightGet$Plain$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<FlightRm>>) => r.body as Array<FlightRm>)
     );
   }
@@ -78,26 +79,32 @@ export class FlightService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  flightGet$Response(params?: {
-  },
-  context?: HttpContext
-
-): Observable<StrictHttpResponse<Array<FlightRm>>> {
-
-    const rb = new RequestBuilder(this.rootUrl, FlightService.FlightGetPath, 'get');
+  flightGet$Response(
+    params?: {},
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<Array<FlightRm>>> {
+    const rb = new RequestBuilder(
+      this.rootUrl,
+      FlightService.FlightGetPath,
+      'get'
+    );
     if (params) {
     }
 
-    return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'text/json',
-      context: context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<FlightRm>>;
-      })
-    );
+    return this.http
+      .request(
+        rb.build({
+          responseType: 'json',
+          accept: 'text/json',
+          context: context,
+        })
+      )
+      .pipe(
+        filter((r: any) => r instanceof HttpResponse),
+        map((r: HttpResponse<any>) => {
+          return r as StrictHttpResponse<Array<FlightRm>>;
+        })
+      );
   }
 
   /**
@@ -106,15 +113,9 @@ export class FlightService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  flightGet(params?: {
-  },
-  context?: HttpContext
-
-): Observable<Array<FlightRm>> {
-
-    return this.flightGet$Response(params,context).pipe(
+  flightGet(params?: {}, context?: HttpContext): Observable<Array<FlightRm>> {
+    return this.flightGet$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<FlightRm>>) => r.body as Array<FlightRm>)
     );
   }
-
 }

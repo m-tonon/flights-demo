@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { SearchFlightsComponent } from './search-flights/search-flights.component';
+import { BookFlightComponent } from './book-flight/book-flight.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { SearchFlightsComponent } from './search-flights/search-flights.componen
     RouterModule,
     NavMenuComponent,
     SearchFlightsComponent,
+    BookFlightComponent
   ],
 })
 export class AppComponent {

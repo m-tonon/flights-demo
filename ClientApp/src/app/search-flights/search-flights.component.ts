@@ -4,11 +4,12 @@ import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { FlightRm } from 'src/api/models';
 import { TimePlaceRm } from 'src/api/models';
 import { FlightService } from 'src/api/services';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-search-flights',
   standalone: true,
-  imports: [CommonModule, NavMenuComponent],
+  imports: [CommonModule, RouterModule, NavMenuComponent],
   templateUrl: './search-flights.component.html',
   styleUrls: ['./search-flights.component.css'],
 })

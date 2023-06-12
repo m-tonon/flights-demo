@@ -9,16 +9,9 @@ public class FlightController : ControllerBase
 {
   private readonly ILogger<FlightController> _logger;
 
-  public FlightController(ILogger<FlightController> logger)
-  {
-    _logger = logger;
-  }
+  static Random random = new Random();
 
-  Random random = new Random();
-
-  [HttpGet]
-  public IEnumerable<FlightRm> Search()
-      => new FlightRm[]
+  private static FlightRm[] flights = new FlightRm[]
       {
         new ( Guid.NewGuid(),
               "American Airlines",
@@ -51,5 +44,18 @@ public class FlightController : ControllerBase
               new TimePlaceRm("London England", DateTime.Now.AddHours(random.Next(4,35))),
               random.Next(1, 853)),
       };
+
+  public FlightController(ILogger<FlightController> logger)
+  {
+    _logger = logger;
+  }
+
+  [HttpGet]
+  public IEnumerable<FlightRm> Search() 
+  => flights;
+
+  [HttpGet("{id}")]
+  public FlightRm? Find(Guid id) 
+  => flights.SingleOrDefault(f => f.Id == id);
 
 }

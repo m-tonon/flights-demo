@@ -11,11 +11,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BookFlightComponent implements OnInit {
   flightId: string = 'not loaded';
-  
+
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.paramMap
-      .subscribe(params => this.flightId = params.get('flightId') ?? 'not provided');
+    this.route.paramMap.subscribe((params) =>
+      this.findFlight(params.get('flightId'))
+    );
   }
+
+  private findFlight = (flightId: string | null) => {
+    this.flightId = flightId ?? 'not provided';
+  };
 }

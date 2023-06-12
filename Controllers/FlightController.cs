@@ -51,11 +51,19 @@ public class FlightController : ControllerBase
   }
 
   [HttpGet]
-  public IEnumerable<FlightRm> Search() 
+  public IEnumerable<FlightRm> Search()
   => flights;
 
+  [ProducesResponseType(StatusCodes.Status404NotFound)]
   [HttpGet("{id}")]
-  public FlightRm? Find(Guid id) 
-  => flights.SingleOrDefault(f => f.Id == id);
+  public ActionResult<FlightRm> Find(Guid id)
+  {
+    var flight = flights.SingleOrDefault(f => f.Id == id);
+
+    if (flight == null)
+      return NotFound();
+
+    return Ok(flight);
+  }
 
 }

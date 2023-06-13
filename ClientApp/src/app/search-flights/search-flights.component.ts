@@ -26,6 +26,8 @@ export class SearchFlightsComponent {
   }
 
   private handleError(error: any) {
-    console.error(error);
+    console.log("Response Error. Status", error.status);
+    console.log("Response Error. Status Text", error.statusText);
+    console.log(error);
   }
 }

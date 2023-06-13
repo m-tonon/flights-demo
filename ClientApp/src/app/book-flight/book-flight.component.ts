@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { FlightService } from 'src/api/services';
 import { FlightRm } from 'src/api/models';
@@ -18,6 +18,7 @@ export class BookFlightComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private flightService: FlightService
   ) {}
 
@@ -30,8 +31,20 @@ export class BookFlightComponent implements OnInit {
   private findFlight = (_flightId: string | null) => {
     this.flightId = _flightId ?? 'not provided';
 
-    this.flightService.findFlight({ id: this.flightId }).subscribe((_flight) => {
-      this.flight = _flight;
+    this.flightService.findFlight({ id: this.flightId }).subscribe({
+      next: (_flight) => (this.flight = _flight),
+      error: this.handleError,
     });
   };
+
+  private handleError = (error: any) => {
+    if (error.status === 404) {
+      alert('Flight not found!');
+      this.router.navigate(['/search-flights']);
+    }
+
+    console.log('Response Error. Status', error.status);
+    console.log('Response Error. Status Text', error.statusText);
+    console.log(error);
+  }
 }

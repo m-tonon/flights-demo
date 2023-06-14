@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { SearchFlightsComponent } from './search-flights/search-flights.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
+import { RegisterPassengerComponent } from './register-passenger/register-passenger.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ import { BookFlightComponent } from './book-flight/book-flight.component';
     RouterModule,
     NavMenuComponent,
     SearchFlightsComponent,
-    BookFlightComponent
+    BookFlightComponent,
+    RegisterPassengerComponent
   ],
 })
 export class AppComponent {

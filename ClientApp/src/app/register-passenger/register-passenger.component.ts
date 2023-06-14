@@ -1,17 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PassengerService } from 'src/api/services';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register-passenger',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './register-passenger.component.html',
-  styleUrls: ['./register-passenger.component.css']
+  styleUrls: ['./register-passenger.component.css'],
 })
 export class RegisterPassengerComponent implements OnInit {
-  constructor() {}
+  
+  form = this.fb.group({
+    email: [''],
+    firstName: [''],
+    lastName: [''],
+    isFemale: [true],
+  });
+
+  constructor(
+    private passengerService: PassengerService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit() {}
 
-  register() {}
+  register() {
+    console.log(this.form.value)
+    this.passengerService.registerPassenger();
+  }
 }

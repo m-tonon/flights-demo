@@ -8,10 +8,10 @@ namespace Flights.Controllers;
 [Route("[controller]")]
 public class PassengerController : ControllerBase
 {
-  [HttpPost]
   [ProducesResponseType(201)]
   [ProducesResponseType(400)]
   [ProducesResponseType(500)]
+  [HttpPost]
   public IActionResult Register(NewPassengerDto dto)
   {
     throw new NotImplementedException();

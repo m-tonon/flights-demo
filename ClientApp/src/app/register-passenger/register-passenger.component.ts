@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PassengerService } from 'src/api/services';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+
+import { PassengerService } from 'src/api/services';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register-passenger',
@@ -21,7 +23,8 @@ export class RegisterPassengerComponent implements OnInit {
 
   constructor(
     private passengerService: PassengerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {}
@@ -29,7 +32,12 @@ export class RegisterPassengerComponent implements OnInit {
   register() {
     console.log(this.form.value)
 
+    const email = this.form.get('email')?.value;
+
     this.passengerService.registerPassenger({ body: this.form.value })
-      .subscribe(res => console.log('form posted to server'))
+      .subscribe({
+        next: res => this.authService.loginUser({ email: email}),
+        error: err => console.error()
+      })
   }
 }

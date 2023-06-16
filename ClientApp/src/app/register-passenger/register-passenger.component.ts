@@ -20,6 +20,8 @@ export class RegisterPassengerComponent implements OnInit {
     lastName: [''],
     isFemale: [true],
   });
+  _email: any = this.form.get('email')?.value;
+
 
   constructor(
     private passengerService: PassengerService,
@@ -30,24 +32,23 @@ export class RegisterPassengerComponent implements OnInit {
   ngOnInit() {}
 
   checkPassenger(): void {
-    const params = {email: this.form.get('email')?.value};
-
-    this.passengerService.findPassenger(params)
+    this.passengerService.findPassenger(this._email)
       .subscribe(_ => {
-        console.log('Passenger exists. Loggin in now');
-        this.authService.loginUser({ email: params.email });
+        this.login();
       })
   }
 
   register() {
     console.log(this.form.value)
 
-    const email = this.form.get('email')?.value;
-
     this.passengerService.registerPassenger({ body: this.form.value })
       .subscribe({
-        next: res => this.authService.loginUser({ email: email}),
+        next: res => this.login(),
         error: err => console.error()
       })
+  }
+
+  private login() {
+    this.authService.loginUser({ email: this._email });
   }
 }

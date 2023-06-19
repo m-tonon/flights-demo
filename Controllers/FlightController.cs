@@ -46,7 +46,7 @@ public class FlightController : ControllerBase
               random.Next(1, 853)),
         };
 
-    private static IList<BookDto> Bookings= new List<BookDto>();
+    private static IList<BookDto> Bookings = new List<BookDto>();
 
     public FlightController(ILogger<FlightController> logger)
     {
@@ -75,10 +75,22 @@ public class FlightController : ControllerBase
         return Ok(flight);
     }
 
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(200)]
     [HttpPost]
-    public void Book(BookDto dto) 
+    public IActionResult Book(BookDto dto)
     {
         System.Diagnostics.Debug.WriteLine($"Booked new flight {dto.FlightId}");
+        
+        var flightFound = flights.Any(f => f.Id == dto.FlightId);
+
+        if (!flightFound)
+            return NotFound();
+        
         Bookings.Add(dto);
+        return CreatedAtAction(nameof(Find), new { id = dto.FlightId });
     }
+
 }

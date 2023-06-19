@@ -72,7 +72,7 @@ export class BookFlightComponent implements OnInit {
     };
 
     this.flightService.bookFlight({ body: booking }).subscribe({
-      next: (_) => console.log('succeded'),
+      next: (_) => this.router.navigate(['/my-bookings']),
       error: this.handleError,
     });
   }

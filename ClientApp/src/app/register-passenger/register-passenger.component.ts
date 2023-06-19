@@ -32,6 +32,7 @@ export class RegisterPassengerComponent implements OnInit {
 
   checkPassenger(): void {
     const params = {email: this.form.get('email')?.value};
+    console.log(params);
 
     this.passengerService.findPassenger(params).subscribe({
       next: (res) => this.login(),

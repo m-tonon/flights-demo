@@ -6,6 +6,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { SearchFlightsComponent } from './search-flights/search-flights.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
 import { RegisterPassengerComponent } from './register-passenger/register-passenger.component';
+import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ import { RegisterPassengerComponent } from './register-passenger/register-passen
     NavMenuComponent,
     SearchFlightsComponent,
     BookFlightComponent,
-    RegisterPassengerComponent
+    RegisterPassengerComponent,
+    MyBookingsComponent
   ],
 })
 export class AppComponent {

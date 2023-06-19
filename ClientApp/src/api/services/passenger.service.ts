@@ -136,7 +136,7 @@ export class PassengerService extends BaseService {
    * This method doesn't expect any request body.
    */
   findPassenger$Response(params: {
-    email: string | undefined | null;
+    email: string;
   },
   context?: HttpContext
 
@@ -166,7 +166,7 @@ export class PassengerService extends BaseService {
    * This method doesn't expect any request body.
    */
   findPassenger(params: {
-    email: string | undefined | null;
+    email: string;
   },
   context?: HttpContext
 

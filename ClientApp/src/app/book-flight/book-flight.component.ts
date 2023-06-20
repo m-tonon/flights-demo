@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from 'src/api/services';
 import { BookDto, FlightRm } from 'src/api/models';
 import { AuthService } from '../services/auth.service';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-book-flight',
@@ -18,7 +18,7 @@ export class BookFlightComponent implements OnInit {
   flightId: string = 'not loaded';
   flight: FlightRm = {};
   form = this.fb.group({
-    number: [1],
+    number: [1, Validators.compose([Validators.required, Validators.min(1), Validators.max(254)])],
   });
 
   constructor(
@@ -59,6 +59,9 @@ export class BookFlightComponent implements OnInit {
   };
 
   book() {
+    if (this.form.invalid) 
+      return;
+    
     console.log(
       `Booking ${this.form.get('number')?.value} passenger for flight ${
         this.flightId
@@ -76,4 +79,9 @@ export class BookFlightComponent implements OnInit {
       error: this.handleError,
     });
   }
+
+  get number() {
+    return this.form.controls.number;
+  }
+
 }

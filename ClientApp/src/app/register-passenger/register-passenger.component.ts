@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { PassengerService } from 'src/api/services';
 import { AuthService } from '../services/auth.service';
@@ -15,10 +15,32 @@ import { Router } from '@angular/router';
 })
 export class RegisterPassengerComponent implements OnInit {
   form = this.fb.group({
-    email: [''],
-    firstName: [''],
-    lastName: [''],
-    isFemale: [true],
+    email: [
+      '',
+      Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(100),
+        Validators.email,
+      ]),
+    ],
+    firstName: [
+      '',
+      Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(35),
+      ]),
+    ],
+    lastName: [
+      '',
+      Validators.compose([
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(35),
+      ]),
+    ],
+    isFemale: [true, Validators.required],
   });
 
   constructor(
@@ -31,19 +53,21 @@ export class RegisterPassengerComponent implements OnInit {
   ngOnInit() {}
 
   checkPassenger(): void {
-    const params = {email: this.form.get('email')?.value};
+    const params = { email: this.form.get('email')?.value };
     console.log(params);
 
     this.passengerService.findPassenger(params).subscribe({
       next: (res) => this.login(),
       error: (err) => {
-        if(err.status != 404)
-        console.error(err)
-      }
+        if (err.status != 404) console.error(err);
+      },
     });
   }
 
   register() {
+    if (this.form.invalid) 
+      return;
+
     console.log(this.form.value);
 
     this.passengerService

@@ -12,6 +12,7 @@ import { MyBookingsComponent } from './my-bookings/my-bookings.component';
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
   imports: [
     CommonModule,
     RouterModule,

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Flights.Dtos;
 using Flights.ReadModels;
+using Flights.Domain.Entities;
+
 
 namespace Flights.Controllers;
 
@@ -9,7 +11,7 @@ namespace Flights.Controllers;
 [Route("[controller]")]
 public class PassengerController : ControllerBase
 {
-  static private IList<NewPassengerDto> Passengers = new List<NewPassengerDto>();
+  static private IList<Passenger> Passengers = new List<Passenger>();
 
   [ProducesResponseType(201)]
   [ProducesResponseType(400)]
@@ -17,7 +19,14 @@ public class PassengerController : ControllerBase
   [HttpPost]
   public IActionResult Register(NewPassengerDto dto)
   {
-    Passengers.Add(dto);
+    var newPassenger = new Passenger(
+      dto.Email,
+      dto.FirstName,
+      dto.LastName,
+      dto.Gender
+    );
+
+    Passengers.Add(newPassenger);
     System.Diagnostics.Debug.WriteLine(Passengers.Count);
     return CreatedAtAction(nameof(Find), new { email = dto.Email });
   }

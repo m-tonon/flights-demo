@@ -7,5 +7,8 @@ namespace Flights.Domain.Entities
     TimePlace Departure,
     TimePlace Arrival,
     int RemainingSeats
-    );
+    )
+  {
+    public IList<Booking> Bookings = new List<Booking>();
+  }
 }

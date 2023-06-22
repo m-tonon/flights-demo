@@ -20,7 +20,7 @@ public class FlightController : ControllerBase
               random.Next(90, 5000).ToString(),
               new TimePlace("Los Angeles", DateTime.Now.AddHours(random.Next(1,3))),
               new TimePlace("Istambul", DateTime.Now.AddHours(random.Next(4,10))),
-              random.Next(1, 853)),
+              2),
         new ( Guid.NewGuid(),
               "Deutsche BA",
               random.Next(90, 5000).ToString(),
@@ -107,6 +107,9 @@ public class FlightController : ControllerBase
 
         if (flight == null)
             return NotFound();
+
+        if(flight.RemainingSeats < dto.NumberOfSeats)
+            return Conflict(new { message = "The number of requested seats exceeds the number of remaining seats." });
         
         var booking = new Booking(
             dto.FlightId,
@@ -114,6 +117,9 @@ public class FlightController : ControllerBase
             dto.NumberOfSeats);
 
         flight.Bookings.Add(booking);
+
+        flight.RemainingSeats -= dto.NumberOfSeats;
+
         return CreatedAtAction(nameof(Find), new { id = dto.FlightId });
     }
 

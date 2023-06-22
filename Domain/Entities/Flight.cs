@@ -10,5 +10,6 @@ namespace Flights.Domain.Entities
     )
   {
     public IList<Booking> Bookings = new List<Booking>();
+    public int RemainingSeats { get; set;} = RemainingSeats;
   }
 }

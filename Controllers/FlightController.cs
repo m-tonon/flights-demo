@@ -13,12 +13,13 @@ public class FlightController : ControllerBase
 {
     private readonly ILogger<FlightController> _logger;
 
-    static Random random = new Random();
+    private readonly Entities _entities;
 
-    
-    public FlightController(ILogger<FlightController> logger)
+    public FlightController(ILogger<FlightController> logger,
+        Entities entities)
     {
         _logger = logger;
+        _entities = entities;
     }
 
     [ProducesResponseType(400)]
@@ -27,7 +28,7 @@ public class FlightController : ControllerBase
     [HttpGet]
     public IEnumerable<FlightRm> Search()
     {
-        var flightRmList = Entities.Flights.Select(flight => new FlightRm(
+        var flightRmList = _entities.Flights.Select(flight => new FlightRm(
             flight.Id,
             flight.Airline,
             flight.Price,
@@ -46,7 +47,7 @@ public class FlightController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<FlightRm> Find(Guid id)
     {
-        var flight = Entities.Flights.SingleOrDefault(f => f.Id == id);
+        var flight = _entities.Flights.SingleOrDefault(f => f.Id == id);
 
         if (flight == null)
             return NotFound();
@@ -72,7 +73,7 @@ public class FlightController : ControllerBase
     {
         System.Diagnostics.Debug.WriteLine($"Booked new flight {dto.FlightId}");
         
-        var flight = Entities.Flights.SingleOrDefault(f => f.Id == dto.FlightId);
+        var flight = _entities.Flights.SingleOrDefault(f => f.Id == dto.FlightId);
 
         if (flight == null)
             return NotFound();

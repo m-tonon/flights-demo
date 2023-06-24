@@ -12,6 +12,14 @@ namespace Flights.Controllers;
 [Route("[controller]")]
 public class PassengerController : ControllerBase
 {
+
+  private readonly Entities _entities;
+
+  public PassengerController(Entities entities)
+  {
+    _entities = entities;
+  }
+
   [ProducesResponseType(201)]
   [ProducesResponseType(400)]
   [ProducesResponseType(500)]
@@ -25,15 +33,15 @@ public class PassengerController : ControllerBase
       dto.Gender
     );
 
-    Entities.Passengers.Add(newPassenger);
-    System.Diagnostics.Debug.WriteLine(Entities.Passengers.Count);
+    _entities.Passengers.Add(newPassenger);
+    System.Diagnostics.Debug.WriteLine(_entities.Passengers.Count);
     return CreatedAtAction(nameof(Find), new { email = dto.Email });
   }
 
   [HttpGet("{email}")]
   public ActionResult<PassengerRm> Find(string email)
   {
-    var passenger = Entities.Passengers.FirstOrDefault(p => p.Email == email);
+    var passenger = _entities.Passengers.FirstOrDefault(p => p.Email == email);
 
     if(passenger == null)
       return NotFound();

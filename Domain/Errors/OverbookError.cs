@@ -1,4 +1,4 @@
-namespace Flights.Domain.Entities
+namespace Flights.Domain.Errors
 {
     public class OverbookError
     {

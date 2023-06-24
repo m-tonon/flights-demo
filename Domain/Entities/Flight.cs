@@ -1,3 +1,4 @@
+using Flights.Domain.Errors;
 namespace Flights.Domain.Entities
 {
   public record Flight(

@@ -1,34 +1,54 @@
 using Flights.Domain.Errors;
 namespace Flights.Domain.Entities
 {
-  public record Flight(
-    Guid Id,
-    string Airline,
-    string Price,
-    TimePlace Departure,
-    TimePlace Arrival,
-    int RemainingSeats
-    )
-  {
-    public IList<Booking> Bookings = new List<Booking>();
-    public int RemainingSeats { get; set;} = RemainingSeats;
-
-    public object? MakeBooking(string passengerEmail, byte numberOfSeats)
+    public class Flight
     {
-      var flight = this;
+        public Guid Id { get; set; }
+        public string Airline { get; set; }
+        public string Price { get; set; }
+        public TimePlace Departure { get; set; }
+        public TimePlace Arrival { get; set; }
+        public int RemainingSeats { get; set; }
 
-      if(flight.RemainingSeats < numberOfSeats)
-            // return Conflict(new { message = "The number of requested seats exceeds the number of remaining seats." });
-            return new OverbookError();
-        
-        var booking = new Booking(
-            passengerEmail,
-            numberOfSeats);
+        public IList<Booking> Bookings = new List<Booking>();
 
-        flight.Bookings.Add(booking);
+        public Flight()
+        {
+        }
 
-        flight.RemainingSeats -= numberOfSeats;
-        return null;
+        public Flight(
+                Guid id,
+                string airline,
+                string price,
+                TimePlace departure,
+                TimePlace arrival,
+                int remainingSeats
+            )
+        {
+            Id = id;
+            Airline = airline;
+            Price = price;
+            Departure = departure;
+            Arrival = arrival;
+            RemainingSeats = remainingSeats;
+        }
+
+        public object? MakeBooking(string passengerEmail, byte numberOfSeats)
+        {
+            var flight = this;
+
+            if (flight.RemainingSeats < numberOfSeats)
+                // return Conflict(new { message = "The number of requested seats exceeds the number of remaining seats." });
+                return new OverbookError();
+
+            var booking = new Booking(
+                passengerEmail,
+                numberOfSeats);
+
+            flight.Bookings.Add(booking);
+
+            flight.RemainingSeats -= numberOfSeats;
+            return null;
+        }
     }
-  }
 }

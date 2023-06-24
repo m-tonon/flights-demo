@@ -34,7 +34,6 @@ public class PassengerController : ControllerBase
     );
 
     _entities.Passengers.Add(newPassenger);
-    System.Diagnostics.Debug.WriteLine(_entities.Passengers.Count);
     return CreatedAtAction(nameof(Find), new { email = dto.Email });
   }
 

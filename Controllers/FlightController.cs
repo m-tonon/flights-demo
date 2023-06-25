@@ -1,6 +1,7 @@
-﻿using Flights.ReadModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Flights.ReadModels;
 using Flights.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
 using Flights.Dtos;
 using Flights.Domain.Errors;
 using Flights.Data;
@@ -83,9 +84,14 @@ public class FlightController : ControllerBase
         if(error is OverbookError)
             return Conflict(new { message = "The number of requested seats exceeds the number of remaining seats." });
 
-        _entities.SaveChanges();
+        try 
+        {
+            _entities.SaveChanges();
+        } catch(DbUpdateConcurrencyException)
+        {
+            return Conflict(new { message = "The number of remaining seats has changed since you last checked." });
+        }
 
         return CreatedAtAction(nameof(Find), new { id = dto.FlightId });
     }
-
 }

@@ -34,6 +34,7 @@ public class PassengerController : ControllerBase
     );
 
     _entities.Passengers.Add(newPassenger);
+    _entities.SaveChanges();
     return CreatedAtAction(nameof(Find), new { email = dto.Email });
   }
 

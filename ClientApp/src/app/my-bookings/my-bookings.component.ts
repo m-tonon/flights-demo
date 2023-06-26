@@ -5,6 +5,7 @@ import { BookingRm } from 'src/api/models/booking-rm';
 import { BookingService } from 'src/api/services';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { BookDto } from 'src/api/models/book-dto';
 
 @Component({
   selector: 'app-my-bookings',
@@ -39,5 +40,19 @@ export class MyBookingsComponent implements OnInit {
     console.log('Response error, Status: ', error.status);
     console.log('Response error, Status Text: ', error.statusText);
     console.log(error);
+  }
+
+  cancel(booking: BookingRm) {
+    
+    const dto: BookDto = {
+      flightId: booking.id,
+      numberOfSeats: booking.numberOfBookedSeats,
+      passengerEmail: booking.passengerEmail
+    };
+
+    this.bookingService.cancelBooking({ body: dto}).subscribe({
+      next: _ => this.bookings = this.bookings.filter(b => b.id !== booking.id),
+      error: this.handleError
+    });
   }
 }

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BookingRm } from 'src/api/models/booking-rm';
 import { BookingService } from 'src/api/services';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { BookDto } from 'src/api/models/book-dto';
 

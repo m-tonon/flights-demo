@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { FlightService } from 'src/api/services';
 import { BookDto, FlightRm } from 'src/api/models';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -30,9 +30,6 @@ export class BookFlightComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.authService.currentUser)
-      this.router.navigate(['/register-passenger']);
-
     this.route.paramMap.subscribe((params) =>
       this.findFlight(params.get('flightId'))
     );

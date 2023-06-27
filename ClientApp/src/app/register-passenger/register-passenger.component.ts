@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { PassengerService } from 'src/api/services';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register-passenger',
@@ -14,6 +14,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./register-passenger.component.css'],
 })
 export class RegisterPassengerComponent implements OnInit {
+
+  constructor(
+    private passengerService: PassengerService,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+  
+  requestedUrl?: string = undefined;
+
   form = this.fb.group({
     email: [
       '',
@@ -43,14 +54,9 @@ export class RegisterPassengerComponent implements OnInit {
     isFemale: [true, Validators.required],
   });
 
-  constructor(
-    private passengerService: PassengerService,
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(param => this.requestedUrl = param['requestedUrl']);
+  }
 
   checkPassenger(): void {
     const params = { email: this.form.get('email')?.value };
@@ -81,6 +87,6 @@ export class RegisterPassengerComponent implements OnInit {
   private login() {
     const _email = this.form.get('email')?.value;
     this.authService.loginUser({ email: _email });
-    this.router.navigate(['/search-flights']);
+    this.router.navigate([this.requestedUrl ?? '/search-flights']);
   }
 }

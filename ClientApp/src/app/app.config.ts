@@ -21,7 +21,11 @@ export const appConfig: ApplicationConfig = {
         canActivate: [authGuard],
       },
       { path: 'register-passenger', component: RegisterPassengerComponent },
-      { path: 'my-bookings', component: MyBookingsComponent },
+      {
+        path: 'my-bookings',
+        component: MyBookingsComponent,
+        canActivate: [authGuard],
+      },
     ]),
   ],
 };

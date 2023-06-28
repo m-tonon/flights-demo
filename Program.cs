@@ -7,9 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add db context
 builder.Services.AddDbContext<Entities>(options =>
-// options.UseInMemoryDatabase(databaseName: "Flights"),
-options.UseSqlServer(),
-ServiceLifetime.Singleton); // otherwise it will be disposed after the first request
+options.UseSqlServer(
+  "Data Source=localost,1433;"+
+  "Database=Flights;"+
+  "User id=SA;"+
+  "Password=Pwd12345;"
+)); // otherwise it will be disposed after the first request
 
 // Add services to the container.
 
@@ -31,6 +34,9 @@ var app = builder.Build();
 
 // this will be used to seed the database
 var entities = app.Services.CreateScope().ServiceProvider.GetService<Entities>();
+
+entities.Database.EnsureCreated(); // create the database if it doesn't exist
+
 var random = new Random();
 
 Flight[] flightsToSeed = new Flight[]

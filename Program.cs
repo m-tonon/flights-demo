@@ -7,12 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add db context
 builder.Services.AddDbContext<Entities>(options =>
-options.UseSqlServer(
-  "Data Source=localost,1433;"+
-  "Database=Flights;"+
-  "User id=SA;"+
-  "Password=Pwd12345;"
-)); // otherwise it will be disposed after the first request
+  options.UseSqlServer(
+    "Data Source=localhost,1433;"+
+    "Database=Flights;"+
+    "User id=developer;"+
+    "Password=Pwd12345;"+
+    "Encrypt=False;" +
+    "TrustServerCertificate=True;"
+  )
+); // otherwise it will be disposed after the first request
 
 // Add services to the container.
 
@@ -28,7 +31,7 @@ builder.Services.AddSwaggerGen(c =>
   c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"]} + {e.ActionDescriptor.RouteValues["controller"]}");
 });
 
-builder.Services.AddSingleton<Entities>();
+builder.Services.AddScoped<Entities>();
 
 var app = builder.Build();
 

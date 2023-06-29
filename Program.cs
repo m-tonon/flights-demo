@@ -42,7 +42,9 @@ entities.Database.EnsureCreated(); // create the database if it doesn't exist
 
 var random = new Random();
 
-Flight[] flightsToSeed = new Flight[]
+if(!entities.Flights.Any())
+{
+  Flight[] flightsToSeed = new Flight[]
 {
   new ( Guid.NewGuid(),
               "American Airlines",
@@ -75,9 +77,10 @@ Flight[] flightsToSeed = new Flight[]
               new TimePlace("London England", DateTime.Now.AddHours(random.Next(4,35))),
               random.Next(1, 853)),
 };
-entities.Flights.AddRange(flightsToSeed);
+  entities.Flights.AddRange(flightsToSeed);
 
-entities.SaveChanges();
+  entities.SaveChanges();
+}
 
 
 app.UseCors(builder => builder

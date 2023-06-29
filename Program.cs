@@ -7,15 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add db context
 builder.Services.AddDbContext<Entities>(options =>
-  options.UseSqlServer(
-    "Data Source=localhost,1433;"+
-    "Database=Flights;"+
-    "User id=developer;"+
-    "Password=Pwd12345;"+
-    "Encrypt=False;" +
-    "TrustServerCertificate=True;"
-  )
-); // otherwise it will be disposed after the first request
+  options.UseSqlServer(builder.Configuration.GetConnectionString("FlightsDb"))
+  ); // otherwise it will be disposed after the first request
 
 // Add services to the container.
 

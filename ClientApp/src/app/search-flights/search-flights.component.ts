@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +15,7 @@ import { FlightService } from 'src/api/services';
   templateUrl: './search-flights.component.html',
   styleUrls: ['./search-flights.component.css'],
 })
-export class SearchFlightsComponent {
+export class SearchFlightsComponent implements OnInit {
   searchResult: FlightRm[] = [];
   searchForm = this.fb.group({
     fromDate: [''],
@@ -28,6 +28,10 @@ export class SearchFlightsComponent {
   constructor(
     private flightService: FlightService,
     private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.search();
+  }
 
   search() {
     this.flightService.searchFlight(this.searchForm.value).subscribe({

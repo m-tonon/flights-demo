@@ -34,9 +34,21 @@ public class FlightController : ControllerBase
         IQueryable<Flight> flights = _entities.Flights;
 
         if(!string.IsNullOrWhiteSpace(@params.Destination))
-        {
-            flights = flights.Where(flight => flight.Arrival.Place.Contains(@params.Destination.ToLower()));
-        }
+          flights = flights.Where(f => f.Arrival.Place.Contains(@params.Destination.ToLower()));
+
+        if(!string.IsNullOrWhiteSpace(@params.From))
+          flights = flights.Where(f => f.Departure.Place.Contains(@params.From.ToLower()));
+
+        if(@params.FromDate != null)
+          flights = flights.Where(f => f.Departure.Time >= @params.FromDate.Value.Date);
+
+        if(@params.ToDate != null)
+          flights = flights.Where(f => f.Departure.Time >= @params.ToDate.Value.Date.AddDays(1).AddTicks(-1));
+
+        if(@params.NumberOfPassengers != 0 && @params.NumberOfPassengers != null)
+          flights = flights.Where(f => f.RemainingSeats >= @params.NumberOfPassengers);
+        else 
+          flights = flights.Where(f => f.RemainingSeats >= 1);
 
         var flightRmList = flights
             .Select(flight => new FlightRm(

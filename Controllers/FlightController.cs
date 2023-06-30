@@ -31,14 +31,22 @@ public class FlightController : ControllerBase
     {
         _logger.LogInformation("Searching for flights for: {Destination}", @params.Destination);
 
-        var flightRmList = _entities.Flights.Select(flight => new FlightRm(
-            flight.Id,
-            flight.Airline,
-            flight.Price,
-            new TimePlaceRm(flight.Departure.Place.ToString(), flight.Departure.Time),
-            new TimePlaceRm(flight.Arrival.Place.ToString(), flight.Arrival.Time),
-            flight.RemainingSeats
-        ));
+        IQueryable<Flight> flights = _entities.Flights;
+
+        if(!string.IsNullOrWhiteSpace(@params.Destination))
+        {
+            flights = flights.Where(flight => flight.Arrival.Place.Contains(@params.Destination.ToLower()));
+        }
+
+        var flightRmList = flights
+            .Select(flight => new FlightRm(
+                flight.Id,
+                flight.Airline,
+                flight.Price,
+                new TimePlaceRm(flight.Departure.Place.ToString(), flight.Departure.Time),
+                new TimePlaceRm(flight.Arrival.Place.ToString(), flight.Arrival.Time),
+                flight.RemainingSeats
+            ));
 
         return flightRmList;
     }

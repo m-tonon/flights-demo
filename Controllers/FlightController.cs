@@ -27,8 +27,10 @@ public class FlightController : ControllerBase
     [ProducesResponseType(500)]
     [ProducesResponseType(typeof(IEnumerable<FlightRm>), 200)]
     [HttpGet]
-    public IEnumerable<FlightRm> Search()
+    public IEnumerable<FlightRm> Search([FromQuery] FlightSearchParams @params)
     {
+        _logger.LogInformation("Searching for flights for: {Destination}", @params.Destination);
+
         var flightRmList = _entities.Flights.Select(flight => new FlightRm(
             flight.Id,
             flight.Airline,

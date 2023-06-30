@@ -18,10 +18,10 @@ import { FlightService } from 'src/api/services';
 export class SearchFlightsComponent {
   searchResult: FlightRm[] = [];
   searchForm = this.fb.group({
+    fromDate: [''],
+    toDate: [''],
     from: [''],
     destination: [''],
-    fromData: [''],
-    toDate: [''],
     numberOfPassengers: [1]
   });
 
@@ -30,7 +30,7 @@ export class SearchFlightsComponent {
     private fb: FormBuilder) {}
 
   search() {
-    this.flightService.searchFlight({}).subscribe({
+    this.flightService.searchFlight(this.searchForm.value).subscribe({
       next: (response: any) => (this.searchResult = response),
       error: this.handleError,
     });
